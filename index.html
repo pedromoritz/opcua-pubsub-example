@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>OPC UA PubSub Example</title>
+    <meta name="description" content="">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="javascript/RGraph/RGraph.common.core.js"></script>
+    <script src="javascript/RGraph/RGraph.gauge.js"></script>
+    <script src="javascript/RGraph/RGraph.common.effects.js"></script>
+    <script src="javascript/RGraph/RGraph.line.js"></script>
+    <script src='/socket.io/socket.io.js'></script>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>OPC UA PubSub Example</h1>
+    <br>
+    <b>Monitored Variable: </b><span id="info"></span><br>
+    <b>Received Value: </b><span id="value"></span><br>
+    <b>Timestamp: </b><span id="timestamp"></span><br>
+    <br>
+    <canvas id="gauge" width="300" height="300">[No canvas support]</canvas>
+    <canvas id="graph" width="800" height="300">[No canvas support]</canvas>
+</body>
+
+<script>
+let gauge;
+let graph;
+let obj = null;
+let data = [];
+const numvalues = 1200;
+
+window.onload = function() {
+
+    gauge = new RGraph.Gauge('gauge', 0, 100, 84)
+        .set('scale.decimals', 0)
+        .set('tickmarks.small', 50)
+        .set('tickmarks.big', 5)
+        .set('title.top', 'Temperature')
+        .set('title.top.size', 24)
+        .set('title.top.pos', 0.15)
+        .set('title.bottom', 'ºC')
+        .set('title.bottom.color', '#aaa')
+        .set('border.outer', 'black')
+        .set('border.width', 0.5)
+        .set('shadow', false)
+        .draw();
+
+    graph = document.getElementById("graph");
+
+    function prepare_graph() {
+
+        obj = new RGraph.Line('graph', [])
+            .set('colors', ['red'])
+            .set('linewidth', 2.00)
+            .set('yaxispos', 'right')
+            .set('ymax', 100)
+            .set('xticks', 25)
+            .set('numyticks', 0)
+            .set('numxticks', 0)
+            .set('background.grid', true)
+            .set('tickmarks', true)
+            .set('shadow', false)
+            .set('gutter.top', 5)
+            .set('gutter.bottom', 5);
+
+        for (let i = 0; i < numvalues; ++i) {
+            data.push(null);
+        }
+    }
+
+    prepare_graph();
+}
+
+function drawGraph(value, timestamp) {
+    if (!obj) return;
+    RGraph.Clear(graph);
+
+    const len = data.length;
+    data.push(value);
+
+    if (data.length > numvalues) {
+        data = RGraph.array_shift(data);
+    }
+    obj.original_data[0] = data;
+    obj.Draw();
+}
+
+const info = document.getElementById("info");
+const socket = io.connect('http://localhost:3700');
+
+socket.on('message', function(data) {
+    gauge.value = data.value;
+    gauge.Draw();
+    info.innerHTML = data.nodeId;
+    value.innerHTML = data.value;
+    timestamp.innerHTML = data.timestamp;
+    drawGraph(data.value);
+});
+</script>
+
+</html>
