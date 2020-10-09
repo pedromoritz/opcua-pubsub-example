@@ -29,4 +29,4 @@ prerequisites: NodeJS v10.19.0 or superior
     $ # start web application
     $ node opcua_client.js
     
-    Now point http://localhost:3700 on your web browser
+    Now point your web browser to http://localhost:3700
