@@ -7,8 +7,8 @@ NodeOPCUA is a OPC UA stack fully written in TypeScript for NodeJS.
 
 This example has two distinct modules:
 
-1) an OPC UA server simulating a PLC with a temperature transmitter (opc_ua_server.js)
-2) a web application containing a OPC UA client and a simplified synoptic panel (opc_ua_client.js)
+1) an OPC UA server simulating a PLC with a temperature transmitter (opcua_server.js)
+2) a web application containing a OPC UA client and a simplified synoptic panel (opcua_client.js)
 
 #### Install
 
