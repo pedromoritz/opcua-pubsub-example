@@ -1,33 +1,31 @@
-
 OPC UA PubSub Example
 =====================
 
-This example for OPC UA 
-
-This example was build on NodeJS
+This example for OPC UA PubSub was built on NodeOPCUA.
 NodeOPCUA is a OPC UA stack fully written in TypeScript for NodeJS.
 
-https://github.com/node-opcua/node-opcua
+This example has two distinct modules:
 
-http://node-opcua.github.io/
+1) an OPC UA server simulating a PLC with a temperature transmitter (opc_ua_server.js)
+2) a web application containing a OPC UA client and a simplified synoptic panel (opc_ua_client.js)
 
-This OPC UA PubSub demo is built over two distinct modules:
+#### Install
 
-1) an OPC UA server simulating a PLC
-2) a web application containing a OPC UA client and a simplified synoptic panel 
-
-#### Install and run
-
-prerequisites: NodeJS v10.19.0 or superior
+prerequisites: npm 6.4.1 or superior
 
     $ git clone https://github.com/pedromoritz/opcua-pubsub-example
     $ cd opcua-pubsub-example
     $ npm install
-    $
+
+#### Run
+
+prerequisites: NodeJS v10.19.0 or superior
+
+    $ cd opcua-pubsub-example
     $ # start server in background
     $ node opc_ua_server.js > /dev/null &
     $
-    $ # start the web application
+    $ # start web application
     $ node opc_ua_client.js
     
-    Now visit http://localhost:3700 on your web browser
+    Now point http://localhost:3700 on your web browser
