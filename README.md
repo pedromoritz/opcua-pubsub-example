@@ -24,9 +24,9 @@ prerequisites: NodeJS v10.19.0 or superior
 
     $ cd opcua-pubsub-example
     $ # start server in background
-    $ node opc_ua_server.js > /dev/null &
+    $ node opcua_server.js > /dev/null &
     $
     $ # start web application
-    $ node opc_ua_client.js
+    $ node opcua_client.js
     
     Now point http://localhost:3700 on your web browser
