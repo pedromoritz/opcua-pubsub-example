@@ -2,6 +2,7 @@ OPC UA PubSub Example
 =====================
 
 This example for OPC UA PubSub was built on NodeOPCUA.
+
 NodeOPCUA is a OPC UA stack fully written in TypeScript for NodeJS.
 
 This example has two distinct modules:
